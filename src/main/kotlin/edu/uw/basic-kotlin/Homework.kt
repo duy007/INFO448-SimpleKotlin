@@ -13,7 +13,7 @@ class Library {
 // write a "whenFn" that takes an arg of type "Any" and returns a String
 
 fun whenFn(k: Any) : String {
-    var result: String = "I don't understand"
+    var result = "I don't understand"
     if (k is String) {
         result = when (k) {
             "Hello" -> "world"
@@ -29,24 +29,24 @@ fun whenFn(k: Any) : String {
 
         }
     }
-    return result;
+    return result
 }
 
 // write an "add" function that takes two Ints, returns an Int, and adds the values
 
 fun add(x: Int, y: Int): Int {
-    return x + y;
+    return x + y
 }
 
 // write a "sub" function that takes two Ints, returns an Int, and subtracts the values
 
 fun sub(x: Int, y: Int): Int {
-    return x - y;
+    return x - y
 }
 
 // write a "mathOp" function that takes two Ints and a function (that takes two Ints and returns an Int), returns an Int, and applies the passed-in-function to the arguments
 fun mathOp(x: Int, y: Int, op: (Int, Int) -> Int): Int {
-    return op(x, y);
+    return op(x, y)
 }
 // write a class "Person" with first name, last name and age
 class Person(
@@ -54,7 +54,7 @@ class Person(
         val lastName: String,
         val age: Int
 ) {
-    val debugString: String = "[Person firstName:${firstName} lastName:${lastName} age:${age}]";
+    val debugString: String = "[Person firstName:${firstName} lastName:${lastName} age:${age}]"
 }
 // write a class "Money" with amount and currency, and define a convert() method and the "+" operator
 class Money() {
@@ -119,7 +119,7 @@ class Money() {
                 }
             }
         }
-        return Money(amount, currency);
+        return Money(amount, currency)
     }
 
     operator fun plus(increment: Money) : Money {
