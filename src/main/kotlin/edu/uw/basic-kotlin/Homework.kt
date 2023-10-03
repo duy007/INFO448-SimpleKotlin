@@ -63,11 +63,11 @@ class Money() {
     private val currencyList: List<String> = listOf("USD", "EUR", "CAN" ,"GBP")
 
     constructor(amount: Int, currency: String) : this() {
-        if (currency in currencyList) {
+        if (currency in currencyList && amount >= 0) {
             this.amount = amount
             this.currency = currency
         } else {
-            throw Exception("currency not availible")
+            throw IllegalArgumentException("Type mismatch")
         }
     }
 
@@ -80,49 +80,55 @@ class Money() {
     */
     fun convert(currency: String) : Money {
         if (currency !in currencyList) {
-            throw Exception("not availible currency")
+            throw Exception("not available currency")
         }
-        var amount: Double = this.amount.toDouble()
+        var amount: Int = this.amount
         if (this.currency == "USD") {
             amount = when (currency) {
-                "GBP" -> amount * .5
-                "EUR" -> amount * 1.5
+                "GBP" -> amount / 2
+                "EUR" -> amount / 2 * 3
                 else -> {
-                    amount * 1.25
+                    amount / 4 * 5
                 }
             }
         }
         if (this.currency == "GBP") {
             amount = when (currency) {
                 "USD" -> amount * 2
-                "EUR" -> amount*3
+                "EUR" -> amount * 3
                 else -> {
-                    amount * 2.5
+                    amount * 2 / 4 * 5
                 }
             }
         }
         if (this.currency == "EUR") {
             amount = when (currency) {
-                "USD" -> amount * (2/3)
-                "GBP" -> amount * (2/3) * .5
+                "USD" -> amount / 3 * 2
+                "GBP" -> amount / 3
                 else -> {
-                    amount * (2/3) * 0.8
+                    amount / 3 * 2 / 4 * 5
                 }
             }
         }
         if (this.currency == "CAN") {
             amount = when (currency) {
-                "USD" -> amount * (5/4)
-                "GBP" -> amount * (5/4) * .5
+                "USD" -> amount / 5 * 4
+                "GBP" -> amount / 5 * 4 / 2
                 else -> {
-                    amount * (5/4) * 0.8
+                    amount / 5 * 4 / 3 * 2
                 }
             }
         }
-        return Money(amount.toInt(), currency);
+        return Money(amount, currency);
     }
 
     operator fun plus(increment: Money) : Money {
-        return Money(0, "USD")
+        // check if currency is the same, if not convert
+        if (increment.currency != this.currency) {
+            val convertedValue = increment.convert(this.currency)
+            return Money(convertedValue.amount+this.amount, this.currency)
+        }
+        // return new amount
+        return Money(increment.amount+this.amount, this.currency)
     }
 }
